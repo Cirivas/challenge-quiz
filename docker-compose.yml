@@ -7,7 +7,13 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    depends_on:
+      - redis
     volumes:
       - ./:/app
     ports:
       - "8081:8081"
+  redis:
+    image: redis/redis-stack:edge
+    ports:
+      - '6379:6379'
