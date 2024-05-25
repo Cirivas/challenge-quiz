@@ -6,5 +6,5 @@ const (
 	First AnswerKey = iota
 	Second
 	Third
-	Forth
+	Fourth
 )
