@@ -1,4 +1,4 @@
-package use_cases
+package get_quiz
 
 import (
 	"github.com/cirivas/challenge-quiz/core/entities"
