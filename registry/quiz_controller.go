@@ -4,6 +4,11 @@ import (
 	"github.com/cirivas/challenge-quiz/core/repository"
 	"github.com/cirivas/challenge-quiz/core/use_cases/get_quiz"
 	"github.com/cirivas/challenge-quiz/entrypoints/api/controllers"
+	app_repository "github.com/cirivas/challenge-quiz/entrypoints/repository"
+	gateway_repository "github.com/cirivas/challenge-quiz/gateways/repository"
+	"github.com/cirivas/challenge-quiz/infrastructure/database/models"
+	redis_db "github.com/cirivas/challenge-quiz/infrastructure/database/redis"
+	"github.com/redis/go-redis/v9"
 )
 
 func (r *registry) NewQuizController() controllers.QuizController {
@@ -15,5 +20,6 @@ func (r *registry) NewGetQuizUseCase() get_quiz.GetQuizUseCase {
 }
 
 func (r *registry) NewQuizRepository() repository.QuizRepository {
-	return nil
+	store := redis_db.NewRedisCollection[models.Quiz](r.dbClient.Client().(*redis.Client))
+	return gateway_repository.NewQuizRepositoryGateway(app_repository.NewQuizRepository(store))
 }
