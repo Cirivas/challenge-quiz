@@ -48,7 +48,7 @@ var _ = Describe("Test AnswerQuiz", func() {
 		},
 	}
 
-	quiz := entities.Quiz{Questions: questions}
+	quiz := &entities.Quiz{Questions: questions}
 
 	When("There were no answers provided", func() {
 		It("Should return error", func() {

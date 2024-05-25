@@ -9,14 +9,14 @@ import (
 type answerQuiz struct{}
 
 type AnswerQuizUseCase interface {
-	AnswerQuiz(quiz entities.Quiz, answers []entities.AnswerKey) (int, error)
+	AnswerQuiz(quiz *entities.Quiz, answers []entities.AnswerKey) (int, error)
 }
 
 func NewAnswerQuizUseCase() AnswerQuizUseCase {
 	return &answerQuiz{}
 }
 
-func (uc *answerQuiz) AnswerQuiz(quiz entities.Quiz, answers []entities.AnswerKey) (int, error) {
+func (uc *answerQuiz) AnswerQuiz(quiz *entities.Quiz, answers []entities.AnswerKey) (int, error) {
 	if len(answers) == 0 {
 		return 0, errors.New("no answers error")
 	}
