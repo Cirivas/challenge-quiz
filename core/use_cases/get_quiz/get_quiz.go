@@ -10,13 +10,13 @@ type getQuiz struct {
 }
 
 type GetQuizUseCase interface {
-	GetQuiz(quizId string) (entities.Quiz, error)
+	GetQuiz(quizId string) (*entities.Quiz, error)
 }
 
 func NewGetQuizUseCase(r repository.QuizRepository) GetQuizUseCase {
 	return &getQuiz{r}
 }
 
-func (uc *getQuiz) GetQuiz(quizId string) (entities.Quiz, error) {
+func (uc *getQuiz) GetQuiz(quizId string) (*entities.Quiz, error) {
 	return uc.quizRepository.GetQuiz(quizId)
 }
