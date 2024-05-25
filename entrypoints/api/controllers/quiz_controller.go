@@ -25,6 +25,16 @@ func (qc *quizController) GetQuiz(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(err)
+		return
+	}
+
+	if quiz == nil {
+		w.WriteHeader(http.StatusNotFound)
+		message := map[string]string{
+			"error": "quiz not found",
+		}
+		json.NewEncoder(w).Encode(message)
 		return
 	}
 
