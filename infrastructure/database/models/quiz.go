@@ -1,6 +1,6 @@
 package models
 
 type Quiz struct {
-	Id        string
-	Questions []Question
+	Id        string     `json:"id"`
+	Questions []Question `json:"questions"`
 }
