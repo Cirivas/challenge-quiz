@@ -12,14 +12,14 @@ type answerQuiz struct {
 }
 
 type AnswerQuizUseCase interface {
-	AnswerQuiz(respondent string, quiz *entities.Quiz, answers []entities.AnswerKey) (int, error)
+	AnswerQuiz(quizId string, respondent string, quiz *entities.Quiz, answers []entities.AnswerKey) (int, error)
 }
 
 func NewAnswerQuizUseCase(scoreRepository repository.ScoreRepository) AnswerQuizUseCase {
 	return &answerQuiz{scoreRepository}
 }
 
-func (uc *answerQuiz) AnswerQuiz(respondent string, quiz *entities.Quiz, answers []entities.AnswerKey) (int, error) {
+func (uc *answerQuiz) AnswerQuiz(quizId string, respondent string, quiz *entities.Quiz, answers []entities.AnswerKey) (int, error) {
 	if len(answers) == 0 {
 		return 0, errors.New("no answers error")
 	}
@@ -36,7 +36,7 @@ func (uc *answerQuiz) AnswerQuiz(respondent string, quiz *entities.Quiz, answers
 		}
 	}
 
-	if err := uc.scoreRepository.SaveScore(respondent, totalCorrectAnswers); err != nil {
+	if err := uc.scoreRepository.SaveScore(respondent, totalCorrectAnswers, quizId); err != nil {
 		return 0, err
 	}
 

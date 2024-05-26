@@ -93,7 +93,7 @@ var _ = Describe("QuizController Test", func() {
 					getQuizMock := mock_get_quiz.NewMockGetQuizUseCase(testCtrl)
 
 					getQuizMock.EXPECT().GetQuiz(gomock.Any()).Return(&entities.Quiz{}, nil).Times(1)
-					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any()).Return(0, errors.New("mock error")).Times(1)
+					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(0, errors.New("mock error")).Times(1)
 
 					quizController := quiz_controller.NewQuizController(getQuizMock, answerQuizkMock)
 					handler := http.HandlerFunc(quizController.AnswerQuiz)
@@ -114,7 +114,7 @@ var _ = Describe("QuizController Test", func() {
 					getQuizMock := mock_get_quiz.NewMockGetQuizUseCase(testCtrl)
 
 					getQuizMock.EXPECT().GetQuiz(gomock.Any()).Return(&entities.Quiz{}, nil).Times(1)
-					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any()).Return(2, nil).Times(1)
+					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any(), gomock.Any()).Return(2, nil).Times(1)
 
 					quizController := quiz_controller.NewQuizController(getQuizMock, answerQuizkMock)
 					handler := http.HandlerFunc(quizController.AnswerQuiz)

@@ -56,7 +56,7 @@ var _ = Describe("Test AnswerQuiz", func() {
 		It("Should return error", func() {
 			useCase := answer_quiz.NewAnswerQuizUseCase(nil)
 
-			_, err := useCase.AnswerQuiz("", quiz, nil)
+			_, err := useCase.AnswerQuiz("", "", quiz, nil)
 
 			Expect(err).To(Not(BeNil()))
 			Expect(err.Error()).To(Equal("no answers error"))
@@ -69,7 +69,7 @@ var _ = Describe("Test AnswerQuiz", func() {
 
 			answers := []entities.AnswerKey{entities.First, entities.Fourth}
 
-			_, err := useCase.AnswerQuiz("", quiz, answers)
+			_, err := useCase.AnswerQuiz("", "", quiz, answers)
 
 			Expect(err).To(Not(BeNil()))
 			Expect(err.Error()).To(Equal("non matching answers to quiz"))
@@ -81,13 +81,13 @@ var _ = Describe("Test AnswerQuiz", func() {
 			testController := gomock.NewController(GinkgoT())
 			scoreRepositoryMock := mock_repository.NewMockScoreRepository(testController)
 
-			scoreRepositoryMock.EXPECT().SaveScore("respondent", 1).Return(nil).Times(1)
+			scoreRepositoryMock.EXPECT().SaveScore("respondent", 1, "quizId").Return(nil).Times(1)
 
 			useCase := answer_quiz.NewAnswerQuizUseCase(scoreRepositoryMock)
 
 			answers := []entities.AnswerKey{entities.First, entities.Fourth, entities.Second}
 
-			correctAnswers, err := useCase.AnswerQuiz("respondent", quiz, answers)
+			correctAnswers, err := useCase.AnswerQuiz("quizId", "respondent", quiz, answers)
 
 			Expect(err).To(BeNil())
 			Expect(correctAnswers).To(Equal(1))

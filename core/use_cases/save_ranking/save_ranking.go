@@ -9,13 +9,13 @@ type saveScore struct {
 }
 
 type SaveScoreUseCase interface {
-	SaveScore(respondent string, score int) error
+	SaveScore(respondent string, score int, quizId string) error
 }
 
 func NewSaveScoreUseCase(r repository.ScoreRepository) SaveScoreUseCase {
 	return &saveScore{r}
 }
 
-func (uc *saveScore) SaveScore(respondent string, score int) error {
-	return uc.scoreRepository.SaveScore(respondent, score)
+func (uc *saveScore) SaveScore(respondent string, score int, quizId string) error {
+	return uc.scoreRepository.SaveScore(respondent, score, quizId)
 }

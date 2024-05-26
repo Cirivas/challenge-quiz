@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 
 	"github.com/cirivas/challenge-quiz/core/entities"
@@ -33,6 +34,8 @@ func NewQuizController(
 }
 
 func (qc *quizController) GetQuiz(w http.ResponseWriter, r *http.Request) {
+	log.Println("QuizController.GetQuiz")
+
 	vars := mux.Vars(r)
 
 	quizId, ok := vars["quizId"]
@@ -81,7 +84,7 @@ func (qc *quizController) AnswerQuiz(w http.ResponseWriter, r *http.Request) {
 
 	var request struct {
 		QuizId     string               `json:"quizId"`
-		Respondent string               `json:"respodent"`
+		Respondent string               `json:"respondent"`
 		Answers    []entities.AnswerKey `json:"answers"`
 	}
 
@@ -111,7 +114,7 @@ func (qc *quizController) AnswerQuiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	correctAnswers, err := qc.answerQuizUseCase.AnswerQuiz(request.Respondent, quiz, request.Answers)
+	correctAnswers, err := qc.answerQuizUseCase.AnswerQuiz(request.QuizId, request.Respondent, quiz, request.Answers)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

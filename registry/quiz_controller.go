@@ -30,6 +30,6 @@ func (r *registry) NewQuizRepository() repository.QuizRepository {
 }
 
 func (r *registry) NewScoreRepository() repository.ScoreRepository {
-	//	store := redis_db.NewRedisCollection[models.Response](r.dbClient.Client().(*redis.Client))
-	return nil
+	store := redis_db.NewRedisCollection[models.Response]("response", r.dbClient.Client().(*redis.Client))
+	return gateway_repository.NewScoreRepositoryGateway(app_repository.NewScoreRepository(store))
 }

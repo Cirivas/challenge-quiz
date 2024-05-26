@@ -64,15 +64,15 @@ func (mr *MockScoreRepositoryMockRecorder) GetScore(respondent, quizId interface
 }
 
 // SaveScore mocks base method.
-func (m *MockScoreRepository) SaveScore(respondent string, score int) error {
+func (m *MockScoreRepository) SaveScore(respondent string, score int, quizId string) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "SaveScore", respondent, score)
+	ret := m.ctrl.Call(m, "SaveScore", respondent, score, quizId)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // SaveScore indicates an expected call of SaveScore.
-func (mr *MockScoreRepositoryMockRecorder) SaveScore(respondent, score interface{}) *gomock.Call {
+func (mr *MockScoreRepositoryMockRecorder) SaveScore(respondent, score, quizId interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveScore", reflect.TypeOf((*MockScoreRepository)(nil).SaveScore), respondent, score)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SaveScore", reflect.TypeOf((*MockScoreRepository)(nil).SaveScore), respondent, score, quizId)
 }
