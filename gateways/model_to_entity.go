@@ -21,10 +21,11 @@ func QuizModelToEntity(quiz *models.Quiz) *entities.Quiz {
 	if quiz == nil {
 		return nil
 	}
+
 	questions := make([]entities.Question, len(quiz.Questions))
 
-	for _, q := range quiz.Questions {
-		questions = append(questions, *QuestionModelToEntity(&q))
+	for i, q := range quiz.Questions {
+		questions[i] = *QuestionModelToEntity(&q)
 	}
 
 	return &entities.Quiz{

@@ -24,8 +24,8 @@ func QuizEntityToModel(quizId string, quiz *entities.Quiz) *models.Quiz {
 
 	questions := make([]models.Question, len(quiz.Questions))
 
-	for _, q := range quiz.Questions {
-		questions = append(questions, *QuestionEntityToModel(&q))
+	for i, q := range quiz.Questions {
+		questions[i] = *QuestionEntityToModel(&q)
 	}
 
 	return &models.Quiz{
