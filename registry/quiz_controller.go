@@ -2,8 +2,9 @@ package registry
 
 import (
 	"github.com/cirivas/challenge-quiz/core/repository"
+	"github.com/cirivas/challenge-quiz/core/use_cases/answer_quiz"
 	"github.com/cirivas/challenge-quiz/core/use_cases/get_quiz"
-	"github.com/cirivas/challenge-quiz/entrypoints/api/controllers"
+	quiz_controller "github.com/cirivas/challenge-quiz/entrypoints/api/controllers/quiz"
 	app_repository "github.com/cirivas/challenge-quiz/entrypoints/repository"
 	gateway_repository "github.com/cirivas/challenge-quiz/gateways/repository"
 	"github.com/cirivas/challenge-quiz/infrastructure/database/models"
@@ -11,8 +12,12 @@ import (
 	"github.com/redis/go-redis/v9"
 )
 
-func (r *registry) NewQuizController() controllers.QuizController {
-	return controllers.NewQuizController(r.NewGetQuizUseCase())
+func (r *registry) NewQuizController() quiz_controller.QuizController {
+	return quiz_controller.NewQuizController(r.NewGetQuizUseCase(), r.NewAnswerQuizUseCase())
+}
+
+func (r *registry) NewAnswerQuizUseCase() answer_quiz.AnswerQuizUseCase {
+	return answer_quiz.NewAnswerQuizUseCase()
 }
 
 func (r *registry) NewGetQuizUseCase() get_quiz.GetQuizUseCase {
