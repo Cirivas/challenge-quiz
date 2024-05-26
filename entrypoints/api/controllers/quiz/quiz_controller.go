@@ -9,7 +9,7 @@ import (
 	"github.com/cirivas/challenge-quiz/core/entities"
 	"github.com/cirivas/challenge-quiz/core/use_cases/answer_quiz"
 	"github.com/cirivas/challenge-quiz/core/use_cases/get_quiz"
-	"github.com/cirivas/challenge-quiz/gateways"
+	"github.com/gorilla/mux"
 )
 
 type quizController struct {
@@ -33,7 +33,20 @@ func NewQuizController(
 }
 
 func (qc *quizController) GetQuiz(w http.ResponseWriter, r *http.Request) {
-	quiz, err := qc.getQuizUseCase.GetQuiz("quizid")
+	vars := mux.Vars(r)
+
+	quizId, ok := vars["quizId"]
+
+	if !ok {
+		w.WriteHeader(http.StatusBadRequest)
+		message := map[string]string{
+			"error": "missing param",
+		}
+		json.NewEncoder(w).Encode(message)
+		return
+	}
+
+	quiz, err := qc.getQuizUseCase.GetQuiz(quizId)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -50,8 +63,8 @@ func (qc *quizController) GetQuiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	quizModel := gateways.QuizEntityToModel("quizId", quiz)
-	quizJSON, _ := json.Marshal(quizModel)
+	quizDTO := QuizEntityToDTO(quizId, quiz)
+	quizJSON, _ := json.Marshal(quizDTO)
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(quizJSON)
