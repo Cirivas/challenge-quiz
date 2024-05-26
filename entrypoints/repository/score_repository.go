@@ -24,9 +24,28 @@ func (repo *scoreRepository) SaveScore(response models.Response) error {
 }
 
 func (repo *scoreRepository) GetScore(respondent string, quizId string) (int, error) {
+	responses, _ := repo.db.Get()
+
+	for _, v := range responses {
+		if v.Respondent == respondent && v.QuizId == quizId {
+			return v.Score, nil
+		}
+	}
 	return 0, nil
 }
 
 func (repo *scoreRepository) GetOthersScore(respondent string, quizId string) ([]int, error) {
-	return nil, nil
+	responses, _ := repo.db.Get()
+
+	result := make([]int, 0)
+	for _, v := range responses {
+		if v.Respondent == respondent && v.QuizId == quizId {
+			continue
+		}
+		if v.QuizId == quizId {
+			result = append(result, v.Score)
+		}
+	}
+
+	return result, nil
 }

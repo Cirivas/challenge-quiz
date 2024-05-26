@@ -25,9 +25,9 @@ func (srg *scoreRepositoryGateway) SaveScore(respondent string, score int, quizI
 }
 
 func (srg *scoreRepositoryGateway) GetScore(respondent string, quizId string) (int, error) {
-	return 0, nil
+	return srg.scoreRepository.GetScore(respondent, quizId)
 }
 
 func (srg *scoreRepositoryGateway) GetOthersScore(respondent string, quizId string) ([]int, error) {
-	return nil, nil
+	return srg.scoreRepository.GetOthersScore(respondent, quizId)
 }
