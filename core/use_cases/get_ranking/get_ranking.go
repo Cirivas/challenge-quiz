@@ -37,8 +37,10 @@ func (uc *getRanking) GetRanking(respondent string, quizId string) (float64, err
 
 	if firstScoreIndex == -1 {
 		if len(allScores) > 0 {
-			// high score
-			return 1.0, nil
+			if score > allScores[len(allScores)-1] {
+				// high score
+				return 1.0, nil
+			}
 		}
 		// no other quizzers
 		return 0, nil
