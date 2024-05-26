@@ -29,13 +29,13 @@ func (r *redisStore[T]) GetById(id string) (*T, error) {
 		return nil, nil
 	}
 
-	var parsedToType T
-	if err = json.Unmarshal([]byte(value), parsedToType); err != nil {
+	var parsedToType []T
+	if err = json.Unmarshal([]byte(value), &parsedToType); err != nil {
 		fmt.Printf("Marshal error: %v; value: %#v\n", err, value)
 		return nil, err
 	}
 
-	return &parsedToType, nil
+	return &parsedToType[0], nil
 }
 
 func (r *redisStore[T]) Get(...database.SearchField) ([]T, error) {
