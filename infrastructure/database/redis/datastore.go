@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/cirivas/challenge-quiz/infrastructure/database"
 	"github.com/redis/go-redis/v9"
@@ -47,7 +48,19 @@ func (r *redisStore[T]) GetById(id string) (*T, error) {
 }
 
 func (r *redisStore[T]) Get(...database.SearchField) ([]T, error) {
-	return nil, nil
+	// pretty inefficient: no support for RediSearch on go-redis :(
+	matcher := fmt.Sprintf("%s:*", r.collectionName)
+	scanResult, _, _ := r.client.Scan(context.Background(), 0, matcher, 0).Result()
+
+	results := make([]T, len(scanResult))
+	for i, v := range scanResult {
+		// remove collection name
+		sliced := strings.Split(v, ":")
+		value, _ := r.GetById(strings.Join(sliced[1:], ":"))
+		results[i] = *value
+	}
+
+	return results, nil
 }
 
 func (r *redisStore[T]) Save(val T) error {
