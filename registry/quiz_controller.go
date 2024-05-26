@@ -17,7 +17,7 @@ func (r *registry) NewQuizController() quiz_controller.QuizController {
 }
 
 func (r *registry) NewAnswerQuizUseCase() answer_quiz.AnswerQuizUseCase {
-	return answer_quiz.NewAnswerQuizUseCase()
+	return answer_quiz.NewAnswerQuizUseCase(r.NewScoreRepository())
 }
 
 func (r *registry) NewGetQuizUseCase() get_quiz.GetQuizUseCase {
@@ -27,4 +27,9 @@ func (r *registry) NewGetQuizUseCase() get_quiz.GetQuizUseCase {
 func (r *registry) NewQuizRepository() repository.QuizRepository {
 	store := redis_db.NewRedisCollection[models.Quiz](r.dbClient.Client().(*redis.Client))
 	return gateway_repository.NewQuizRepositoryGateway(app_repository.NewQuizRepository(store))
+}
+
+func (r *registry) NewScoreRepository() repository.ScoreRepository {
+	//	store := redis_db.NewRedisCollection[models.Response](r.dbClient.Client().(*redis.Client))
+	return nil
 }

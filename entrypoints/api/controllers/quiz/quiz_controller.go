@@ -67,8 +67,9 @@ func (qc *quizController) AnswerQuiz(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var request struct {
-		QuizId  string
-		Answers []entities.AnswerKey
+		QuizId     string               `json:"quizId"`
+		Respondent string               `json:"respodent"`
+		Answers    []entities.AnswerKey `json:"answers"`
 	}
 
 	if err = json.Unmarshal(bodyRaw, &request); err != nil {
@@ -97,7 +98,7 @@ func (qc *quizController) AnswerQuiz(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	correctAnswers, err := qc.answerQuizUseCase.AnswerQuiz(quiz, request.Answers)
+	correctAnswers, err := qc.answerQuizUseCase.AnswerQuiz(request.Respondent, quiz, request.Answers)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)

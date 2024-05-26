@@ -35,16 +35,16 @@ func (m *MockAnswerQuizUseCase) EXPECT() *MockAnswerQuizUseCaseMockRecorder {
 }
 
 // AnswerQuiz mocks base method.
-func (m *MockAnswerQuizUseCase) AnswerQuiz(quiz *entities.Quiz, answers []entities.AnswerKey) (int, error) {
+func (m *MockAnswerQuizUseCase) AnswerQuiz(respondent string, quiz *entities.Quiz, answers []entities.AnswerKey) (int, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "AnswerQuiz", quiz, answers)
+	ret := m.ctrl.Call(m, "AnswerQuiz", respondent, quiz, answers)
 	ret0, _ := ret[0].(int)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // AnswerQuiz indicates an expected call of AnswerQuiz.
-func (mr *MockAnswerQuizUseCaseMockRecorder) AnswerQuiz(quiz, answers interface{}) *gomock.Call {
+func (mr *MockAnswerQuizUseCaseMockRecorder) AnswerQuiz(respondent, quiz, answers interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnswerQuiz", reflect.TypeOf((*MockAnswerQuizUseCase)(nil).AnswerQuiz), quiz, answers)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AnswerQuiz", reflect.TypeOf((*MockAnswerQuizUseCase)(nil).AnswerQuiz), respondent, quiz, answers)
 }

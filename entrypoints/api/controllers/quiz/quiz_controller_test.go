@@ -17,7 +17,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestBooks(t *testing.T) {
+func TestQuizController(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "QuizController test suite")
 }
@@ -43,7 +43,7 @@ var _ = Describe("QuizController Test", func() {
 
 			When("getting the quiz", func() {
 				It("should return internal server error if it fails", func() {
-					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"quizId": "quizId", "answers": [1,2,3]}`))
+					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"respondent": "myself","quizId": "quizId", "answers": ["1","2","3"]}`))
 					rr := httptest.NewRecorder()
 
 					testCtrl := gomock.NewController(GinkgoT())
@@ -62,7 +62,7 @@ var _ = Describe("QuizController Test", func() {
 				})
 
 				It("should return not found error for invalid quiz id", func() {
-					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"quizId": "quizId", "answers": [1,2,3]}`))
+					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"respondent": "myself","quizId": "quizId", "answers": ["1","2","3"]}`))
 					rr := httptest.NewRecorder()
 
 					testCtrl := gomock.NewController(GinkgoT())
@@ -84,7 +84,7 @@ var _ = Describe("QuizController Test", func() {
 
 			When("answering the quest", func() {
 				It("should return internal server error when it fails", func() {
-					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"quizId": "quizId", "answers": [1,2,3]}`))
+					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"respondent": "myself","quizId": "quizId", "answers": ["1","2","3"]}`))
 					rr := httptest.NewRecorder()
 
 					testCtrl := gomock.NewController(GinkgoT())
@@ -93,7 +93,7 @@ var _ = Describe("QuizController Test", func() {
 					getQuizMock := mock_get_quiz.NewMockGetQuizUseCase(testCtrl)
 
 					getQuizMock.EXPECT().GetQuiz(gomock.Any()).Return(&entities.Quiz{}, nil).Times(1)
-					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any()).Return(0, errors.New("mock error")).Times(1)
+					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any()).Return(0, errors.New("mock error")).Times(1)
 
 					quizController := quiz_controller.NewQuizController(getQuizMock, answerQuizkMock)
 					handler := http.HandlerFunc(quizController.AnswerQuiz)
@@ -105,7 +105,7 @@ var _ = Describe("QuizController Test", func() {
 				})
 
 				It("should return the score of the quiz", func() {
-					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"quizId": "quizId", "answers": [1,2,3]}`))
+					req, _ := http.NewRequest("POST", "/answer", strings.NewReader(`{"respondent": "myself","quizId": "quizId", "answers": ["1","2","3"]}`))
 					rr := httptest.NewRecorder()
 
 					testCtrl := gomock.NewController(GinkgoT())
@@ -114,7 +114,7 @@ var _ = Describe("QuizController Test", func() {
 					getQuizMock := mock_get_quiz.NewMockGetQuizUseCase(testCtrl)
 
 					getQuizMock.EXPECT().GetQuiz(gomock.Any()).Return(&entities.Quiz{}, nil).Times(1)
-					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any()).Return(2, nil).Times(1)
+					answerQuizkMock.EXPECT().AnswerQuiz(gomock.Any(), gomock.Any(), gomock.Any()).Return(2, nil).Times(1)
 
 					quizController := quiz_controller.NewQuizController(getQuizMock, answerQuizkMock)
 					handler := http.HandlerFunc(quizController.AnswerQuiz)
