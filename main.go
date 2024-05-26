@@ -28,6 +28,8 @@ func main() {
 	router := mux.NewRouter()
 
 	router.Handle("/quiz/{quizId}", http.HandlerFunc(controllers.QuizController.GetQuiz)).Methods("GET")
+	router.Handle("/quiz/{quizId}/ranking/{respondent}", http.HandlerFunc(controllers.RankingController.GetRanking)).Methods("GET")
+
 	router.Handle("/answer", http.HandlerFunc(controllers.QuizController.AnswerQuiz)).Methods("POST")
 
 	router.Use(contentTypeApplicationJsonMiddleware)
