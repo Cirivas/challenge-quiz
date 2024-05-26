@@ -36,8 +36,12 @@ func (uc *getRanking) GetRanking(respondent string, quizId string) (float64, err
 	firstScoreIndex := slices.Index(allScores, score)
 
 	if firstScoreIndex == -1 {
-		// high score
-		return 1.0, nil
+		if len(allScores) > 0 {
+			// high score
+			return 1.0, nil
+		}
+		// no other quizzers
+		return 0, nil
 	}
 
 	totalAnswers := len(allScores)
