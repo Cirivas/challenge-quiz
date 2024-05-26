@@ -11,7 +11,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestBooks(t *testing.T) {
+func TestAnswerQuiz(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "AnswerQuiz test suite")
 }
