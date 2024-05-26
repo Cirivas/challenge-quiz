@@ -2,6 +2,6 @@ package models
 
 type Response struct {
 	CorrectAnswers int
-	Quizzer        string
+	Respondent     string
 	QuizId         string
 }
