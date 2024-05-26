@@ -10,15 +10,17 @@ import (
 )
 
 type redisStore[T any] struct {
-	client *redis.Client
+	client         *redis.Client
+	collectionName string
 }
 
-func NewRedisCollection[T any](client *redis.Client) database.Datastore[T] {
-	return &redisStore[T]{client}
+func NewRedisCollection[T any](collectionName string, client *redis.Client) database.Datastore[T] {
+	return &redisStore[T]{client, collectionName}
 }
 
 func (r *redisStore[T]) GetById(id string) (*T, error) {
-	value, err := r.client.JSONGet(context.Background(), id).Result()
+	key := fmt.Sprintf("%s:%s", r.collectionName, id)
+	value, err := r.client.JSONGet(context.Background(), key).Result()
 
 	if err != nil {
 		return nil, err

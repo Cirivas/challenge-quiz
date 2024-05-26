@@ -25,7 +25,7 @@ func (r *registry) NewGetQuizUseCase() get_quiz.GetQuizUseCase {
 }
 
 func (r *registry) NewQuizRepository() repository.QuizRepository {
-	store := redis_db.NewRedisCollection[models.Quiz](r.dbClient.Client().(*redis.Client))
+	store := redis_db.NewRedisCollection[models.Quiz]("quiz", r.dbClient.Client().(*redis.Client))
 	return gateway_repository.NewQuizRepositoryGateway(app_repository.NewQuizRepository(store))
 }
 
