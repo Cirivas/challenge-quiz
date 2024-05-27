@@ -13,7 +13,19 @@ services:
       - ./:/app
     ports:
       - "8081:8081"
+
   redis:
     image: redis/redis-stack:edge
+    volumes:
+      - ./redis:/setup
     ports:
       - '6379:6379'
+    
+  redis-setup:
+    image: redis/redis-stack:edge
+    restart: "no"
+    depends_on:
+      - redis
+    volumes:
+      - ./redis:/setup
+    entrypoint: bash -c './setup/setup.sh redis 6379'

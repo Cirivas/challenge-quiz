@@ -1,0 +1,38 @@
+{
+    "id": "quizid",
+    "questions": [
+        {
+            "id": 1,
+            "text": "enunciate 1",
+            "alternatives": {
+                "1": "alternative 1",
+                "2": "alternative 2",
+                "3": "alternative 3",
+                "4": "alternative 4"
+            },
+            "correctAnswer": "1"
+        },
+        {
+            "id": 2,
+            "text": "enunciate 2",
+            "alternatives": {
+                "1": "alternative 1",
+                "2": "alternative 2",
+                "3": "alternative 3",
+                "4": "alternative 4"
+            },
+            "correctAnswer": "2"
+        },
+        {
+            "id": 3,
+            "text": "enunciate 3",
+            "alternatives": {
+                "1": "alternative 1",
+                "2": "alternative 2",
+                "3": "alternative 3",
+                "4": "alternative 4"
+            },
+            "correctAnswer": "4"
+        }
+    ]
+}
