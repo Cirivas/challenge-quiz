@@ -11,6 +11,8 @@ The project was done by with architecture in mind, with `core` being the innermo
 
 ## Endpoints
 
+The project is a REST API with the following endpoints:
+
 ```
 GET /quiz/:quizId
 DESCRIPTION Retrieves a quiz and its alternatives. A quiz may have less than, but not more than, 4 alternatives
